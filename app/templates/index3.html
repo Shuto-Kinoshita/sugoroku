@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>「紙」すごろくメイキング</title>
+    </head>
+    <body>
+        <br>
+        <center><H1>「紙」すごろくメイキング</H1></center>
+        <center>すごろく作って印刷して遊ぼう！</center>
+
+        <center>
+            <table BORDER=1>
+                <ul>
+                    <tr><th>　<a HREF="account_page.html">アカウント作成</a>　</th></tr>
+                    <tr><th>　<a HREF="login_page.html">ログインする</a>　</th></tr>
+                    <tr><th>　<a HREF="help_page.html">ヘルプ</a>　</th></tr>
+                </ul>
+            </table>
+        </center>
+        <br>
+        <center><img src="/static/images/fujita_koudai.png" WIDTH=100></center>
+        <h1>{{name}}</h1>
+        <center>
+            <ul><a HREF="format_page.html">フォーマット選択</a></ul>
+            <FORM METHOD=post ACTION="/cr"><input type="submit" value="表示"></FORM>
+            <center><img src="/static/images/argument.png" WIDTH=300></center>
+            <FORM METHOD=get ACTION="/index"><input type="submit" value="戻る"></FORM>
+        </center>
+    </body>
+</html>
+
+

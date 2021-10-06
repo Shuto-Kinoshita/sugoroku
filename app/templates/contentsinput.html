@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>「紙」すごろくメイキング</title>
+        <style>
+            h1 {
+                font-size: 25pt;
+                font-family: メイリオ, Osaka;
+                color: darkblue;
+            }
+            h2 {
+                font-size: 15pt;
+                font-family: メイリオ, Osaka;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>「紙すごろくメイキング」</h1>
+        <table border="0">
+            <tr>
+                <h2>
+                    <ul>
+                <td width="100" align="center" bgcolor="#87ceed">
+                <a HREF="login_page.html" target="create">ログイン</a></td>
+                <td width="100" align="center"  bgcolor="#ffd700">
+                <a HREF="mylist_page.html" target="create">マイリスト</a></td>
+                <td width="100" align="center"  bgcolor="#ffa500">
+                <a HREF="format_page.html" target="create">新規作成</a></td>
+                <td width="100" align="center"  bgcolor="#9acd32">
+                <a HREF="making_page.html" target="create">編集</a></td>
+                <td width="100" align="center"  bgcolor="#dda0dd">
+                <a HREF="copy_page.html" target="create">コピー</a></td>
+                <td width="100" align="center"  bgcolor="#d3d3d3">
+                <a HREF="help_page.html" target="create">ヘルプ</a></td>
+                </ul>
+                </h2>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <h1>追加用</h1>
+                    <table border="2" bordercolor="#000000">
+                    <tr><td width="200" height="200" bgcolor="white">
+                        <form action="/add" method="post">
+                            メッセージ1：<input type="text" name="title">
+                            <br>
+                            メッセージ2：<input type="text" name="body">
+                            <br>
+
+                            背景色：
+                            <!--
+                            <select name="color" size=1>
+                            <option value="white" SELECTED>白
+                            <option value="red">赤
+                            <option value="blue">青
+                            <option value="yellow">黄色
+                            <option value="green">緑
+                            </select>
+                            -->
+
+                            <br>
+                            <input type="submit" value="追加">
+                        </form>
+
+
+                    </td></tr>
+                    </table>
+                </td>
+                <td>
+                    <h1>上書き用</h1>
+                    <table border="2" bordercolor="#000000">
+                        <tr>
+                            <td width="200" height="200" bgcolor="white">
+                                <form action="/update" method="post" id="update">
+                                    メッセージ1：<input type="text" name="title">
+                                    <br>
+                                    メッセージ2：<input type="text" name="body">
+                                    <br>
+
+                                    背景色：
+                                    <!--
+                                    <select name="color" size=1>
+                                    <option value="white" SELECTED>白
+                                    <option value="red">赤
+                                    <option value="blue">青
+                                    <option value="yellow">黄色
+                                    <option value="green">緑
+                                    </select>
+                                    -->
+
+                                    <br>
+                                    <input type="submit" value="上書き">
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <h1>作成ルート</h1>
+        <form action="/delete" method="post" id="delete">
+            <input type="submit" value="選択したマスを削除">
+        </form>
+        <br>
+
+        <table border="2" bordercolor="#000000">
+        {% for onegai in all_onegai %}
+
+                <tr><td width="200" height="200" bgcolor="white">
+                    {{onegai.title}}
+                    <br>
+                    {{onegai.body}}
+                </td>
+
+                <td width="100" height="200" bgcolor="#d3d3d3">
+
+                    上書き：<input type="radio" name="update" form="update" value={{onegai.id}}>
+                    <br>
+                    削除：<input type="checkbox" name="delete" form="delete" value={{onegai.id}}>
+                </td>
+                </tr>
+
+        {% endfor %}
+        </table>
+        <br>
+        <form method=post action="/output"><input type="submit" value="すごろく作成"></form>
+        <br>
+        <center><a href="/form">フォーマット選択に戻る</a></center>
+    </body>
+</html>
