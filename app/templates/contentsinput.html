@@ -22,19 +22,16 @@
             <tr>
                 <h2>
                     <ul>
-                <td width="100" align="center" bgcolor="#87ceed">
-                <a HREF="login_page.html" target="create">ログイン</a></td>
-                <td width="100" align="center"  bgcolor="#ffd700">
-                <a HREF="mylist_page.html" target="create">マイリスト</a></td>
-                <td width="100" align="center"  bgcolor="#ffa500">
-                <a HREF="format_page.html" target="create">新規作成</a></td>
-                <td width="100" align="center"  bgcolor="#9acd32">
-                <a HREF="making_page.html" target="create">編集</a></td>
-                <td width="100" align="center"  bgcolor="#dda0dd">
-                <a HREF="copy_page.html" target="create">コピー</a></td>
-                <td width="100" align="center"  bgcolor="#d3d3d3">
-                <a HREF="help_page.html" target="create">ヘルプ</a></td>
-                </ul>
+                        <td width="100" align="center" bgcolor="#ffa500">
+                            <a href="/form">フォーマット</a>
+                        </td>
+                        <td width="100" align="center" bgcolor="#9acd32">
+                            <strong>編集</strong>
+                        </td>
+                        <td width="100" align="center" bgcolor="#d3d3d3">
+                            作成
+                        </td>
+                    </ul>
                 </h2>
             </tr>
         </table>
@@ -44,7 +41,8 @@
                 <td>
                     <h1>追加用</h1>
                     <table border="2" bordercolor="#000000">
-                    <tr><td width="200" height="200" bgcolor="white">
+                    <tr>
+                        <td width="200" height="200" bgcolor="white">
                         <form action="/add" method="post">
                             メッセージ1：<input type="text" name="title">
                             <br>
@@ -66,8 +64,8 @@
                             <input type="submit" value="追加">
                         </form>
 
-
-                    </td></tr>
+                        </td>
+                    </tr>
                     </table>
                 </td>
                 <td>
@@ -109,23 +107,41 @@
         <br>
 
         <table border="2" bordercolor="#000000">
-        {% for onegai in all_onegai %}
+            {% for onegai in all_onegai %}
+                <tr>
+                    <td>
+                        {{onegai.id}}
+                    </td>
+                    <td>
+                        <form action="/up" method="post" id="up">
+                            <input type="hidden" name="up" value={{onegai.id}}>
+                            <input type="submit" value="↑">
+                        </form>
+                        <form action="/down" method="post" id="down">
+                            <input type="hidden" name="down" value={{onegai.id}}>
+                            <input type="submit" value="↓">
+                        </form>
+                    </td>
+                    <td width="200" height="200" bgcolor="white">
+                        {{onegai.title}}
+                        <br>
+                        {{onegai.body}}
+                    </td>
 
-                <tr><td width="200" height="200" bgcolor="white">
-                    {{onegai.title}}
-                    <br>
-                    {{onegai.body}}
-                </td>
-
-                <td width="100" height="200" bgcolor="#d3d3d3">
-
-                    上書き：<input type="radio" name="update" form="update" value={{onegai.id}}>
-                    <br>
-                    削除：<input type="checkbox" name="delete" form="delete" value={{onegai.id}}>
-                </td>
+                    <td width="100" height="200" bgcolor="#d3d3d3">
+                        上書き：<input type="radio" name="update" form="update" value={{onegai.id}}>
+                        <br>
+                        削除：<input type="checkbox" name="delete" form="delete" value={{onegai.id}}>
+                        <br>
+                        <form action="/getimg" method = post enctype = multipart/form-data>
+                                マスに表示する画像：
+                                <input type="file" name = "file">
+                                <input type="hidden" name="file_id" value={{onegai.id}}>
+                                <input type = "submit" value = "Upload">
+                        </form>
+                    </td>
                 </tr>
-
-        {% endfor %}
+            {% endfor %}
         </table>
         <br>
         <form method=post action="/output"><input type="submit" value="すごろく作成"></form>

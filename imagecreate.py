@@ -54,6 +54,8 @@ for i in range(2):
 for i in range(2):
     cv2.line(img, (1125, 130 + (i * 280)), (1125, 170 + (i * 280)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
 
+#img = cv2.imread('app/static/images/kidoyuki2.png')
+
 cv2.imwrite('app/static/images/kidoyuki.png', img)
 # True
 

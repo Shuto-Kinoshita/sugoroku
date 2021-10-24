@@ -3,6 +3,17 @@
 <html>
     <head>
         <title>「紙」すごろくメイキング</title>
+        <style>
+            h1 {
+                font-size: 25pt;
+                font-family: メイリオ, Osaka;
+                color: darkblue;
+            }
+            h2 {
+                font-size: 15pt;
+                font-family: メイリオ, Osaka;
+            }
+        </style>
     </head>
 
     <body>
@@ -10,27 +21,26 @@
         「紙すごろくメイキング」
         </h1>
         <table border="0">
-        <tr>
-            <h2>
-                <ul>
-            <td width="100" align="center" bgcolor="#87ceed">
-            <a HREF="login_page.html" target="create">ログイン</a></td>
-            <td width="100" align="center"  bgcolor="#ffd700">
-            <a HREF="mylist_page.html" target="create">マイリスト</a></td>
-            <td width="100" align="center"  bgcolor="#ffa500">
-            <a HREF="format_page.html" target="create">新規作成</a></td>
-            <td width="100" align="center"  bgcolor="#9acd32">
-            <a HREF="making_page.html" target="create">編集</a></td>
-            <td width="100" align="center"  bgcolor="#dda0dd">
-            <a HREF="copy_page.html" target="create">コピー</a></td>
-            <td width="100" align="center"  bgcolor="#d3d3d3">
-            <a HREF="help_page.html" target="create">ヘルプ</a></td>
-            </ul>
-            </h2>
-        </tr>
+            <tr>
+                <h2>
+                    <ul>
+                        <td width="100" align="center" bgcolor="#ffa500">
+                            <a HREF="/form" target="create">フォーマット</a>
+                        </td>
+                        <td width="100" align="center" bgcolor="#9acd32">
+                            <a HREF="/input" target="create">編集</a>
+                        </td>
+                        <td width="100" align="center" bgcolor="#dda0dd">
+                            <strong>作成</strong>
+                        </td>
+                    </ul>
+                </h2>
+            </tr>
         </table>
         <br>
         <center><img src="/static/images/argument.png" WIDTH=500></center>
+        <br>
+        <center><a href="./static/images/argument.png" download>すごろくを保存</a></center>
         <br>
         <center><a href="/input">戻る</a></center>
     </body>
