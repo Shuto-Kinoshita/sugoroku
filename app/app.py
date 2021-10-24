@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def allwed_file(filename):
+def allowed_file(filename):
     # .があるかどうかのチェックと、拡張子の確認
     # OKなら１、だめなら0
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -138,7 +138,7 @@ def uploads_file():
             print('ファイルがありません')
             return redirect(request.url)
         # ファイルのチェック
-        if file and allwed_file(file.filename):
+        if file and allowed_file(file.filename):
             # 危険な文字を削除（サニタイズ処理）
             filename = secure_filename(file.filename)
             # ファイル名をマス番号に変更

@@ -4,8 +4,10 @@ import numpy as np
 print(cv2.__version__)
 # 3.3.0
 
+
 # 255:白　128:灰色　0:黒    単色画像
 img = np.full((730, 1250, 3), 128, dtype=np.uint8)
+
 
 #for i in range(10):
     #cv2.drawMarker(img, ((i + 1) * 50, 0), (255, 255, 0), markerType=cv2.MARKER_TRIANGLE_UP, markerSize=100)
@@ -19,6 +21,16 @@ for i in range(5):
 
 for i in range(5):
     cv2.rectangle(img, (850, 30 + (i * 140)), (1000, 130 + (i * 140)), (255, 0, 0))
+
+j=50
+k=200
+for j in range(3):
+    for i in range(5):
+        cv2.rectangle(img, (j, 30 + (i * 140)), (k, 130 + (i * 140)), (255, 0, 0))
+    j=j+400
+    k=k+400
+
+
 
 # cv2.line() ライン横
 for i in range(2):
