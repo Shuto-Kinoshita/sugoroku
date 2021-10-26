@@ -1,5 +1,9 @@
 import cv2
 import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+import io
+import sys
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 print(cv2.__version__)
 # 3.3.0
@@ -60,5 +64,18 @@ for i in range(2):
 for i in range(2):
     cv2.line(img, (1125, 80 + (i * 280)), (1125, 220 + (i * 280)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
 
-cv2.imwrite('app/static/images/kidoyuki2.png', img)
+cv2.circle(img, (200, 200), 5, (255, 255, 255), thickness=-1)
+cv2.circle(img, (100, 100), 5, (255, 255, 255), thickness=-1)
+cv2.circle(img, (100, 200), 5, (255, 255, 255), thickness=-1)
+
+base = Image.fromarray(img)
+draw = ImageDraw.Draw(base)
+font_path = '/download/SatsukiGendaiMincho-M.ttf'
+font_size = 10
+font = ImageFont.truetype(font_path, font_size)
+draw.text(xy=(100, 200), text='3マス進む', font=font, fill=(255, 255, 255, 10))
+
+base = np.array(base)  # 画像をOpencv形式(ndarray)に変更
+
+cv2.imwrite('app/static/images/kidoyuki3.png', base)
 # True
