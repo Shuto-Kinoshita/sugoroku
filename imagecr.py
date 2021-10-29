@@ -1,90 +1,80 @@
-def imagecreate(a, b, d):
+def imagecreate():
     import cv2
     import numpy as np
+    from PIL import Image, ImageDraw, ImageFont
+    import io
+    import sys
+    from models.models import OnegaiContent
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
     print(cv2.__version__)
     # 3.3.0
 
-    c = a + b
-    for onegai in d:
-        print(onegai.title+":"+onegai.body)
+    # 255:白　128:灰色　0:黒    単色画像
+    img = np.full((730, 1250, 3), 128, dtype=np.uint8)
 
-    #255:白　128:灰色　0:黒    単色画像
-    img = np.full((210, 425, 3), 128, dtype=np.uint8)
+    # for i in range(10):
+    # cv2.drawMarker(img, ((i + 1) * 50, 0), (255, 255, 0), markerType=cv2.MARKER_TRIANGLE_UP, markerSize=100)
 
-    for i in range(10):
-        cv2.drawMarker(img, ((i+1)*15, 35), (255, 255, 0), markerType=cv2.MARKER_TRIANGLE_UP, markerSize=8)
+    # cv2.rectangle() 長方形
+    for i in range(5):
+        cv2.rectangle(img, (50, 30 + (i * 140)), (200, 130 + (i * 140)), (255, 0, 0))
 
-    #cv2.rectangle() 長方形
-    cv2.rectangle(img, (50, 10), (125, 60), (255, 0, 0))
-    cv2.rectangle(img, (50, 80), (125, 130), (0, 255, 0), thickness=-1)
-    cv2.rectangle(img, (50, 150), (125, 190), (0, 0, 255), thickness=-1)
-    cv2.rectangle(img, (50, 150), (125, 200), (255, 255, 0))
-    cv2.circle(img, (50, 35), 10, (255, 0, 255), thickness=-1)
+    for i in range(5):
+        cv2.rectangle(img, (450, 30 + (i * 140)), (600, 130 + (i * 140)), (255, 0, 0))
 
-    #cv2.line() 線分
-    cv2.rectangle(img, (175, 10), (250, 60), (255, 255, 255), thickness=8, lineType=cv2.LINE_4)
-    cv2.line(img, (175, 10), (250, 60), (0, 0, 0), thickness=1, lineType=cv2.LINE_4)
-    cv2.rectangle(img, (175, 80), (250, 130), (255, 255, 255), thickness=8, lineType=cv2.LINE_8)
-    cv2.line(img, (175, 80), (250, 130), (0, 0, 0), thickness=1, lineType=cv2.LINE_8)
-    cv2.rectangle(img, (175, 150), (250, 200), (255, 255, 255), thickness=8, lineType=cv2.LINE_AA)
-    cv2.line(img, (175, 150), (250, 200), (0, 0, 0), thickness=1, lineType=cv2.LINE_AA)
+    for i in range(5):
+        cv2.rectangle(img, (850, 30 + (i * 140)), (1000, 130 + (i * 140)), (255, 0, 0))
 
-    cv2.rectangle(img, (600, 20), (750, 120), (0, 0, 0), lineType=cv2.LINE_AA, shift=1)
-    cv2.rectangle(img, (601, 160), (751, 260), (0, 0, 0), lineType=cv2.LINE_AA, shift=1)
-    cv2.rectangle(img, (602, 300), (752, 400), (0, 0, 0), lineType=cv2.LINE_AA, shift=1)
+    # cv2.line() ライン横
+    for i in range(2):
+        cv2.line(img, (200 + (i * 400), 80), (450 + (i * 400), 80), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
 
-    cv2.imwrite('app/static/images/argument.png', img)
+    for i in range(2):
+        cv2.line(img, (200 + (i * 400), 220), (450 + (i * 400), 220), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    for i in range(2):
+        cv2.line(img, (200 + (i * 400), 360), (450 + (i * 400), 360), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    for i in range(2):
+        cv2.line(img, (200 + (i * 400), 500), (450 + (i * 400), 500), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    for i in range(2):
+        cv2.line(img, (200 + (i * 400), 640), (450 + (i * 400), 640), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    # cv2.line() ライン横右
+    for i in range(4):
+        cv2.line(img, (1000, 80 + (i * 140)), (1120, 80 + (i * 140)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    # cv2.line() ライン縦左
+    for i in range(2):
+        cv2.line(img, (125, 270 + (i * 280)), (125, 310 + (i * 280)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    # cv2.line() ライン縦右
+    for i in range(2):
+        cv2.line(img, (1125, 80 + (i * 280)), (1125, 220 + (i * 280)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+
+    base = Image.fromarray(img)
+    draw = ImageDraw.Draw(base)
+    font_path = '/download/SatsukiGendaiMincho-M.ttf'
+    font_size = 20
+    font = ImageFont.truetype(font_path, font_size)
+    k = 1
+    a = 0
+    for i in range(5):
+        for j in range(3):
+            con = OnegaiContent.query.filter_by(id=k).first()
+            if a % 2 == 0:
+                draw.text(xy=(50 + j * 400, 30 + i * 140), text=con.title, font=font, fill=(255, 255, 255, 10))
+                draw.text(xy=(50 + j * 400, 50 + i * 140), text=con.body, font=font, fill=(255, 255, 255, 10))
+            else:
+                draw.text(xy=(850 - j * 400, 30 + i * 140), text=con.title, font=font, fill=(255, 255, 255, 10))
+                draw.text(xy=(850 - j * 400, 50 + i * 140), text=con.body, font=font, fill=(255, 255, 255, 10))
+            k = k + 1
+        a = a + 1
+
+    base = np.array(base)  # 画像をOpencv形式(ndarray)に変更
+
+    cv2.imwrite('app/static/images/kidoyuki3.png', base)
     # True
-
-    img_rect = cv2.rectangle(img, (10, 10), (110, 60), (255, 0, 0))
-    print(img is img_rect)
-    # True
-
-    img = np.full((210, 425, 3), 128, dtype=np.uint8)
-
-    cv2.line(img, (50, 10), (125, 60), (255, 0, 0))
-    cv2.line(img, (50, 60), (125, 10), (0, 255, 255), thickness=4, lineType=cv2.LINE_AA)
-
-    #cv2.arrowedLine() 矢印
-    cv2.arrowedLine(img, (50, 80), (125, 130), (0, 255, 0), thickness=4)
-    cv2.arrowedLine(img, (50, 130), (125, 80), (255, 0, 255), tipLength=0.3)
-
-    cv2.rectangle(img, (50, 150), (125, 200), (255, 255, 0))
-
-    #cv2.circle()　円
-    cv2.circle(img, (190, 35), 15, (255, 255, 255), thickness=-1)
-    cv2.circle(img, (240, 35), 20, (0, 0, 0), thickness=3, lineType=cv2.LINE_AA)
-
-    #cv2.ellipse() 楕円
-    cv2.ellipse(img, ((190, 105), (20, 50), 0), (255, 255, 255))
-    cv2.ellipse(img, ((240, 105), (20, 50), 30), (0, 0, 0), thickness=-1)
-
-    cv2.ellipse(img, (190, 175), (10, 25), 0, 0, 270, (255, 255, 255))
-    cv2.ellipse(img, (240, 175), (10, 25), 30, 0, 270, (0, 0, 0), thickness=-1)
-
-    #cv2.drawMarker() マーカー
-    cv2.drawMarker(img, (300, 20), (255, 0, 0))
-    cv2.drawMarker(img, (337, 20), (0, 255, 0), markerType=cv2.MARKER_TILTED_CROSS, markerSize=15)
-    cv2.drawMarker(img, (375, 20), (0, 0, 255), markerType=cv2.MARKER_STAR, markerSize=10)
-
-    cv2.drawMarker(img, (300, 50), (0, 255, 255), markerType=cv2.MARKER_DIAMOND)
-    cv2.drawMarker(img, (337, 50), (255, 0, 255), markerType=cv2.MARKER_SQUARE, markerSize=15)
-    cv2.drawMarker(img, (375, 50), (255, 255, 0), markerType=cv2.MARKER_TRIANGLE_UP, markerSize=10)
-
-    #cv2.polylines()　cv2.fillPoly() 折れ線　多角形
-    pts = np.array(((300, 80), (300, 130), (335, 130)))
-    cv2.polylines(img, [pts], True, (255, 255, 255), thickness=2)
-
-    pts = np.array(((335, 80), (375, 80), (375, 130)))
-    cv2.fillPoly(img, [pts], (0, 0, 0))
-
-    #cv2.putText() 文字列
-    cv2.putText(img, 'nkmk', (300, 170), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), thickness=2)
-    cv2.putText(img, 'nkmk', (300, 195), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
-
-    cv2.imwrite('app/static/images/image_map.png', img)
-    # True
-
-    return c
 

@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 import io
 import sys
+from models.models import OnegaiContent
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 print(cv2.__version__)
@@ -64,16 +65,25 @@ for i in range(2):
 for i in range(2):
     cv2.line(img, (1125, 80 + (i * 280)), (1125, 220 + (i * 280)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
 
-cv2.circle(img, (200, 200), 5, (255, 255, 255), thickness=-1)
-cv2.circle(img, (100, 100), 5, (255, 255, 255), thickness=-1)
-cv2.circle(img, (100, 200), 5, (255, 255, 255), thickness=-1)
-
 base = Image.fromarray(img)
 draw = ImageDraw.Draw(base)
 font_path = '/download/SatsukiGendaiMincho-M.ttf'
-font_size = 10
+font_size = 20
 font = ImageFont.truetype(font_path, font_size)
-draw.text(xy=(100, 200), text='3マス進む', font=font, fill=(255, 255, 255, 10))
+k = 1
+a = 0
+for i in range(5):
+    for j in range(3):
+        con = OnegaiContent.query.filter_by(id=k).first()
+        if a % 2 == 0:
+            draw.text(xy=(50+j*400, 30+i*140), text=con.title, font=font, fill=(255, 255, 255, 10))
+            draw.text(xy=(50+j*400, 50+i*140), text=con.body, font=font, fill=(255, 255, 255, 10))
+        else:
+            draw.text(xy=(850-j*400, 30+i*140), text=con.title, font=font, fill=(255, 255, 255, 10))
+            draw.text(xy=(850-j*400, 50+i*140), text=con.body, font=font, fill=(255, 255, 255, 10))
+        k = k+1
+    a = a+1
+
 
 base = np.array(base)  # 画像をOpencv形式(ndarray)に変更
 

@@ -21,10 +21,13 @@ def allowed_file(filename):
     # OKなら１、だめなら0
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/")
+def de():
+    return render_template("index3.html")
 
 @app.route("/form")
 def form():
-    return render_template("index3.html")
+    return render_template("formselect.html")
 
 
 @app.route("/input")
@@ -41,7 +44,7 @@ def index():
 @app.route("/output", methods=["post"])
 def t4():
     all_onegai = OnegaiContent.query.all()
-    print(imagecr.imagecreate(3, 5, all_onegai))
+    print(imagecr.imagecreate())
     return render_template('mapoutput.html')
 
 
@@ -70,11 +73,9 @@ def up():
     if int(request.form["up"]) > 1:
         j1 = int(request.form["up"]) - 1
         con2 = OnegaiContent.query.filter_by(id=str(j1)).first()
-        con3 = con2.id
         con4 = con2.title
         con5 = con2.body
         con2.title = "a"
-        print(con5, con4, con3)
         con1 = OnegaiContent.query.filter_by(id=request.form["up"]).first()
         con6 = con1.title
         con7 = con1.body
@@ -142,7 +143,7 @@ def uploads_file():
             # 危険な文字を削除（サニタイズ処理）
             filename = secure_filename(file.filename)
             # ファイル名をマス番号に変更
-            # filename = request.form["file_id"] + filename.rsplit('.', 1)[1].lower()
+            filename = request.form["file_id"] + '.' +filename.rsplit('.', 1)[1].lower()
             # ファイルの保存
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return index()
