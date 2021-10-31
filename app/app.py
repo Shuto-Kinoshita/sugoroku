@@ -43,7 +43,6 @@ def index():
 
 @app.route("/output", methods=["post"])
 def t4():
-    all_onegai = OnegaiContent.query.all()
     print(imagecr.imagecreate())
     return render_template('mapoutput.html')
 
