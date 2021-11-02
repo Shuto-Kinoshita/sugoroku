@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, g
 from models.models import OnegaiContent
 from models.database import db_session
 from datetime import datetime
@@ -25,26 +25,51 @@ def allowed_file(filename):
 def de():
     return render_template("index3.html")
 
+@app.route("/start")
+def start():
+    return render_template("start.html")
+
+@app.route("/mapreset")
+def mapreset():
+    #database初期化処理
+
+    return render_template("formselect.html")
+
 @app.route("/form")
 def form():
     return render_template("formselect.html")
 
-
-@app.route("/input")
-def index():
+@app.route("/input0", methods=["post"])
+def index0():
+    map = request.form["map"]
+    g.map = map
     all_onegai = OnegaiContent.query.all()
     i = 1
     for onegai in all_onegai:
         onegai.id = i
         i = i + 1
     db_session.commit()
-    return render_template("contentsinput.html", all_onegai=all_onegai)
+    count = len(all_onegai)
+    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=g.map)
+
+
+@app.route("/input", methods=["post"])
+def index():
+    #print(g.map)
+    all_onegai = OnegaiContent.query.all()
+    i = 1
+    for onegai in all_onegai:
+        onegai.id = i
+        i = i + 1
+    db_session.commit()
+    count = len(all_onegai)
+    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=g.map)
 
 
 @app.route("/output", methods=["post"])
 def t4():
     print(imagecr.imagecreate())
-    return render_template('mapoutput.html')
+    return render_template('mapoutput.html', map=session["map"])
 
 
 @app.route("/add", methods=["post"])

@@ -61,6 +61,8 @@ def imagecreate():
     font = ImageFont.truetype(font_path, font_size)
     k = 1
     a = 0
+    all_onegai = OnegaiContent.query.all()
+    b = len(all_onegai)
     for i in range(5):
         for j in range(3):
             con = OnegaiContent.query.filter_by(id=k).first()
@@ -71,7 +73,12 @@ def imagecreate():
                 draw.text(xy=(850 - j * 400, 30 + i * 140), text=con.title, font=font, fill=(255, 255, 255, 10))
                 draw.text(xy=(850 - j * 400, 50 + i * 140), text=con.body, font=font, fill=(255, 255, 255, 10))
             k = k + 1
-        a = a + 1
+            if k == b + 1:
+                break
+        else:
+            a = a + 1
+            continue
+        break
 
     base = np.array(base)  # 画像をOpencv形式(ndarray)に変更
 

@@ -13,7 +13,6 @@ print(cv2.__version__)
 # 255:白　128:灰色　0:黒    単色画像
 img = np.full((730, 1250, 3), 128, dtype=np.uint8)
 
-
 #for i in range(10):
     #cv2.drawMarker(img, ((i + 1) * 50, 0), (255, 255, 0), markerType=cv2.MARKER_TRIANGLE_UP, markerSize=100)
 
@@ -84,8 +83,9 @@ for i in range(5):
         k = k+1
     a = a+1
 
-
 base = np.array(base)  # 画像をOpencv形式(ndarray)に変更
+
+cv2.read('app/static/images/kidoyuki3.png')
 
 cv2.imwrite('app/static/images/kidoyuki3.png', base)
 # True

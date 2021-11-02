@@ -42,6 +42,9 @@
         <br>
         <center><a href="./static/images/kidoyuki3.png" download>すごろくを保存</a></center>
         <br>
-        <center><a href="/input">戻る</a></center>
+        <form action="/input" method="post" id="input1">
+            <input type="hidden" name="map" value={{map}}>
+            <center><input type="submit" class="btn btn-success" value="戻る"></center>
+        </form>
     </body>
 </html>
