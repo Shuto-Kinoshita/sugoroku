@@ -10,6 +10,7 @@ class OnegaiContent(Base):
     body = Column(Text)
     date = Column(DateTime, default=datetime.now())
 
+
     def __init__(self, title=None, body=None, date=None):
         self.title = title
         self.body = body

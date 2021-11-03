@@ -1,11 +1,15 @@
 import os
-from flask import Flask, render_template, request, redirect, session, g
+from flask import Flask, render_template, request, redirect, session
 from models.models import OnegaiContent
 from models.database import db_session
+from models2.models2 import mapContent
+from models2.database2 import db_session2
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
 import imagecr
+import imagecreate3
+import imagecreate4
 
 UPLOAD_FOLDER = './app/static/images/contentsimg'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'gif', 'pdf', 'heic'}
@@ -23,6 +27,9 @@ def allowed_file(filename):
 
 @app.route("/")
 def de():
+    all_onegai = OnegaiContent.query.all()
+    for onegai in all_onegai:
+        print(onegai.title)
     return render_template("index3.html")
 
 @app.route("/start")
@@ -41,8 +48,10 @@ def form():
 
 @app.route("/input0", methods=["post"])
 def index0():
-    map = request.form["map"]
-    g.map = map
+    con = mapContent.query.filter_by(id=1).first()
+    con.map = request.form["map"]
+    db_session2.commit()
+    map1 = con.map
     all_onegai = OnegaiContent.query.all()
     i = 1
     for onegai in all_onegai:
@@ -50,12 +59,13 @@ def index0():
         i = i + 1
     db_session.commit()
     count = len(all_onegai)
-    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=g.map)
+    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=map1)
 
 
 @app.route("/input", methods=["post"])
 def index():
-    #print(g.map)
+    con = mapContent.query.filter_by(id=1).first()
+    map = con.map
     all_onegai = OnegaiContent.query.all()
     i = 1
     for onegai in all_onegai:
@@ -63,13 +73,23 @@ def index():
         i = i + 1
     db_session.commit()
     count = len(all_onegai)
-    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=g.map)
+    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=map)
 
 
 @app.route("/output", methods=["post"])
 def t4():
-    print(imagecr.imagecreate())
-    return render_template('mapoutput.html', map=session["map"])
+    con = mapContent.query.filter_by(id=1).first()
+    map = con.map
+    if map == 15:
+        print(map)
+        imagecr.imagecreate()
+    elif map == 25:
+        print("b")
+        imagecreate3.imagecreate()
+    else:
+        print("a")
+        imagecreate3.imagecreate()
+    return render_template('mapoutput.html')
 
 
 @app.route("/add", methods=["post"])

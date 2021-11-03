@@ -5,7 +5,7 @@ def imagecreate():
     import io
     import sys
     from models.models import OnegaiContent
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
     print(cv2.__version__)
     # 3.3.0
