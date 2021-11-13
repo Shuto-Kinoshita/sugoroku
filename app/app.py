@@ -76,7 +76,7 @@ def index0():
     db_session.commit()
     # 現在入力されているマス目の数をカウント
     count = len(all_onegai)
-    return render_template("contentsinput1.html", all_onegai=all_onegai, count=count, map=map1)
+    return render_template("contentsinput2.html", all_onegai=all_onegai, count=count, map=map1)
 
 
 # マス目情報入力ページ
@@ -94,7 +94,7 @@ def index():
     db_session.commit()
     # 現在入力されているマス目の数をカウント
     count = len(all_onegai)
-    return render_template("contentsinput1.html", all_onegai=all_onegai, count=count, map=map)
+    return render_template("contentsinput2.html", all_onegai=all_onegai, count=count, map=map)
 
 
 # 完成すごろく出力ページ
@@ -110,7 +110,7 @@ def t4():
         imagecr.imagecreate()
     elif int(map) == 30:
         print("b")
-        imagecreate3.imagecreate()
+        #imagecreate3.imagecreate()
     else:
         print("ab")
         #imagecreate3.imagecreate()

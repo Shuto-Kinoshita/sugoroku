@@ -67,37 +67,6 @@ for i in range(2):
 for i in range(2):
     cv2.line(img, (1125, 80 + (i * 280)), (1125, 220 + (i * 280)), (255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
 
-# 画像入れ
-def add(f1, f2, top, left):
-    img = Image.open(f1)
-    img_resize = img.resize((100, 100))
-    img_resize.save(f1)
-
-    img1 = cv2.imread(f1)
-    img2 = cv2.imread(f2)
-
-    height, width = img1.shape[:2]
-    img2[top:height + top, left:width + left] = img1
-
-    cv2.imwrite('app/static/images/kidoyuki3.png', img2)
-
-
-flist = glob.glob('app/static/images/contentsimg/*')
-b_path = 'app/static/images/kidoyuki3.png'
-for fname in flist:
-    print(fname.split('.')[0])
-a = 1
-b = 0
-for i in range(5):
-    for j in range(3):
-        for fname in flist:
-            if fname.split('.')[0] == "app/static/images/contentsimg/"+str(a) and b == 0:
-                add(fname, b_path, 50+150*i, 50+500*j)
-                b = 1
-                print(j)
-        a = a+1
-        b = 0
-
 
 # 文字入れ
 base = Image.fromarray(img)
@@ -120,6 +89,37 @@ for i in range(5):
     a = a+1
 
 base = np.array(base)  # 画像をOpencv形式(ndarray)に変更
+cv2.imwrite('app/static/images/kidoyuki3.png', base)
 
-#cv2.imwrite('app/static/images/kidoyuki3.png', base)
-# True
+
+# 画像入れ
+def add(f1, f2, top, left):
+    img = Image.open(f1)
+    img_resize = img.resize((50, 50))
+    img_resize.save(f1)
+
+    img1 = cv2.imread(f1)
+    img2 = cv2.imread(f2)
+
+    height, width = img1.shape[:2]
+    img2[top:height + top, left:width + left] = img1
+
+    cv2.imwrite('app/static/images/kidoyuki3.png', img2)
+
+
+flist = glob.glob('app/static/images/contentsimg/*')
+b_path = 'app/static/images/kidoyuki3.png'
+for fname in flist:
+    print(fname.split('.')[0])
+a = 1
+b = 0
+c = 0
+for i in range(5):
+    for j in range(3):
+        for fname in flist:
+            if fname.split('.')[0] == "app/static/images/contentsimg/"+str(a) and b == 0:
+                add(fname, b_path, 80+140*i, 150+400*j)
+                b = 1
+                print(j)
+        a = a+1
+        b = 0
