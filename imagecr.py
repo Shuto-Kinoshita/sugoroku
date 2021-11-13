@@ -56,7 +56,7 @@ def imagecreate():
 
     base = Image.fromarray(img)
     draw = ImageDraw.Draw(base)
-    font_path = '/download/SatsukiGendaiMincho-M.ttf'
+    font_path = '/Downloads/SatsukiGendaiMincho-M.ttf'
     font_size = 20
     font = ImageFont.truetype(font_path, font_size)
     k = 1
