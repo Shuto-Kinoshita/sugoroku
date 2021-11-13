@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&amp;display=swap" rel="stylesheet">
+    <link href="blog.css" rel="stylesheet">
+    <link href="../example.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <title>「紙」すごろくメイキング</title>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        #top {
+            color: #9acd32;
+            text-decoration: overline underline
+        }
+
+        #menu {
+            color: #000000;
+        }
+
+        #menu-used {
+            color: #008000;
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="blog.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <center><IMG SRC="static/images/title.png" width="600"></center>
+        </div>
+      </header>
+        <div class="nav-scroller py-1 mb-2">
+            <nav class="nav d-flex justify-content-between">
+              <a class="p-2 text-muted" href="#">ホーム</a>
+              <a class="p-2 text-muted" href="#">フォーマット選択</a>
+              <a class="p-2 text-muted" href="#">マス目編集</a>
+              <a class="p-2 text-muted" href="#">作成</a>
+              <a class="p-2 text-muted" href="#">ヘルプ</a>
+            </nav>
+        </div>
+    </div>
+    <br>
+    <center>
+    <table>
+        <tr>
+            <td class="align-top">
+                <table border="0" width="25">
+                    <!-- 余白作成用 -->
+                </table>
+            </td>
+
+            <!-- 編集 -->
+            <td class="align-top">
+                <form action="/add" method="post">
+                    <table border="0" bordercolor="#000000">
+                        <tr>
+                            <td colspan="2" bgcolor="#9acd32">
+                                <h2>追加用</h2>
+                                <br />
+                                <button type="submit">追加</button><!--class="btn btn-outline-success"-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- テキスト挿入 -->
+                            <td width="300" height="300" bgcolor="white">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleFormControlInput1" class="form-label">メインメッセージ</label>
+                                        <input type="text" name="title" class="form-control form-control-lg" id="exampleFormControlInput1">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleFormControlInput1" class="form-label">サブメッセージ</label>
+                                        <input type="text" name="body" class="form-control form-control-sm" id="exampleFormControlInput2">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+
+                <br /><!-- ここから下は上書き用 -->
+
+
+                <form action="/update" method="post" id="update">
+                    <table border="0" bordercolor="#000000">
+                        <tr>
+                            <td colspan="2" bgcolor="#9acd32">
+                                <h2>上書き用</h2>
+                                <br />
+                                <button type="submit">上書き</button><!--class="btn btn-outline-success"-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- テキスト挿入 -->
+                            <td width="300" height="300" bgcolor="white">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleFormControlInput1" class="form-label">メインメッセージ</label>
+                                        <input type="text" name="title" class="form-control form-control-lg" id="exampleFormControlInput3">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleFormControlInput1" class="form-label">サブメッセージ</label>
+                                        <input type="text" name="body" class="form-control form-control-sm" id="exampleFormControlInput12">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+            </td>
+            <!-- ページ全体の左右を分けるtd -->
+            <td>
+                <table border="0" width="25">
+                    <!-- 余白作成用 -->
+                </table>
+            </td>
+
+            <!-- ルート表示 -->
+            <td class="align-top">
+                <table class="table table-bordered" width="300" bgcolor="#9acd32">
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <h2>作成ルート・画像挿入</h2>
+                                <h3>{{count}}/{{map}}マス完成済み</h3>
+                            </div>
+                            <div class="row">
+                                <form action="/delete" method="post" id="delete">
+                                    <input type="submit" value="選択したマスを削除"><!--class="btn btn-outline-secondary"-->
+                                </form>
+                                <br>
+                                <form method=post action="/output">
+                                    <input type="submit" value="すごろく作成"><!--class="btn btn-outline-success"-->
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered">
+                    {% for onegai in all_onegai %}
+                    <tr>
+
+                        <td class="align-middle table-secondary">
+                            <form action="/up" method="post" id="up">
+                                <input type="hidden" name="up" value={{onegai.id}}>
+                                <input type="submit" value="▲">
+                            </form>
+                            <center>{{onegai.id}}</center>
+                            <form action="/down" method="post" id="down">
+                                <input type="hidden" name="down" value={{onegai.id}}>
+                                <input type="submit" value="▼">
+                            </form>
+                        </td>
+                        <td width="200" height="200" bgcolor="white">
+                            {{onegai.title}}
+                            <br>
+                            {{onegai.body}}
+                        </td>
+
+                        <td width="100" height="200" class="table-secondary">
+                            上書き：<input type="radio" name="update" form="update" value={{onegai.id}}>
+                            <br>
+                            削除：<input type="checkbox" name="delete" form="delete" value={{onegai.id}}>
+                            <br>
+
+                            <form action="/getimg" method=post enctype=multipart/form-data>
+                                マスに表示する画像：
+                                <input type="file" name="file"><br />
+                                <input type="hidden" name="file_id" value={{onegai.id}}>
+
+                                <input type="submit" value="Upload">
+
+                            </form>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+
+            </td>
+        </tr>
+    </table>
+    </center>
+
+
+</body>
+</html>
+
+
+
+
