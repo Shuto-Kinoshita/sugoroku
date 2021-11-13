@@ -35,7 +35,7 @@ def de():
     all_onegai = OnegaiContent.query.all()
     for onegai in all_onegai:
         print(onegai.title)
-    return render_template("contentsinput2.html", all_onegai=all_onegai)
+    return render_template("contentsinput.html", all_onegai=all_onegai)
 
 # スタートページ出力
 @app.route("/start")
