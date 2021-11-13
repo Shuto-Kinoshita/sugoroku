@@ -35,7 +35,7 @@ def de():
     all_onegai = OnegaiContent.query.all()
     for onegai in all_onegai:
         print(onegai.title)
-    return render_template("contentsinput1.html", all_onegai=all_onegai)
+    return render_template("contentsinput2.html", all_onegai=all_onegai)
 
 # スタートページ出力
 @app.route("/start")
@@ -51,12 +51,12 @@ def mapreset():
         content = OnegaiContent.query.filter_by(id=onegai.id).first()
         db_session.delete(content)
     db_session.commit()
-    return render_template("formselect.html")
+    return render_template("formselect1.html")
 
 # フォーマット選択ページ
 @app.route("/form")
 def form():
-    return render_template("formselect.html")
+    return render_template("formselect1.html")
 
 
 # マス目情報入力ページ　ファーマット選択ページから遷移してきた時
@@ -67,7 +67,7 @@ def index0():
     con.map = request.form["map"]
     db_session2.commit()
     map1 = con.map
-    # マス目情報のidを指定
+    # マス目情報のidを振り直す
     all_onegai = OnegaiContent.query.all()
     i = 1
     for onegai in all_onegai:
@@ -76,7 +76,7 @@ def index0():
     db_session.commit()
     # 現在入力されているマス目の数をカウント
     count = len(all_onegai)
-    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=map1)
+    return render_template("contentsinput1.html", all_onegai=all_onegai, count=count, map=map1)
 
 
 # マス目情報入力ページ
@@ -94,7 +94,7 @@ def index():
     db_session.commit()
     # 現在入力されているマス目の数をカウント
     count = len(all_onegai)
-    return render_template("contentsinput.html", all_onegai=all_onegai, count=count, map=map)
+    return render_template("contentsinput1.html", all_onegai=all_onegai, count=count, map=map)
 
 
 # 完成すごろく出力ページ
@@ -103,16 +103,17 @@ def t4():
     # フォーマットのマス数を呼び出し
     con = mapContent.query.filter_by(id=1).first()
     map = con.map
+    print(map)
     # マス数によってそれぞれのすごろく作成プログラムを実行
-    if map == 15:
-        print(map)
+    if int(map) == 15:
+        print("c")
         imagecr.imagecreate()
-    elif map == 25:
+    elif int(map) == 30:
         print("b")
         imagecreate3.imagecreate()
     else:
-        print("a")
-        imagecreate3.imagecreate()
+        print("ab")
+        #imagecreate3.imagecreate()
     return render_template('mapoutput.html')
 
 
