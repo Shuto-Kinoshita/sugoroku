@@ -118,8 +118,12 @@ for i in range(5):
     for j in range(3):
         for fname in flist:
             if fname.split('.')[0] == "app/static/images/contentsimg/"+str(a) and b == 0:
-                add(fname, b_path, 80+140*i, 150+400*j)
+                if c % 2 == 0:
+                    add(fname, b_path, 80+140*i, 150+400*j)
+                else:
+                    add(fname, b_path, 80+140*i, 950-400*j)
                 b = 1
                 print(j)
         a = a+1
         b = 0
+    c = c+1

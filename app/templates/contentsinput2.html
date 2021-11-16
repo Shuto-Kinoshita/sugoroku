@@ -117,13 +117,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <!-- <label for="exampleFormControlInput1" class="form-label">メインメッセージ</label> -->
-                                        <input type="text" name="title" class="form-control form-control-lg" id="exampleFormControlInput" placeholder="メインメッセージ">
+                                        <input type="text" name="title" maxlength="10" class="form-control form-control-lg" id="exampleFormControlInput" placeholder="メインメッセージ">
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" name="body" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="サブメッセージ">
+                                        <input type="text" name="body" maxlength="10" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="サブメッセージ">
                                     </div>
                                 </div>
                             </td>
@@ -154,13 +154,13 @@
 
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" name="title" class="form-control form-control-lg" id="exampleFormControlInput3" placeholder="メインメッセージ">
+                                        <input type="text" name="title" maxlength="10" class="form-control form-control-lg" id="exampleFormControlInput3" placeholder="メインメッセージ">
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" name="body" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="サブメッセージ">
+                                        <input type="text" name="body" maxlength="10" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="サブメッセージ">
                                     </div>
                                 </div>
                             </td>
@@ -225,6 +225,12 @@
                             {{onegai.title}}
                             <br>
                             {{onegai.body}}
+                            <br>
+                            {% for fname in flist %}
+                                {% if fname.split('.')[0] == "app/static/images/contentsimg/"+onegai.id|string %}
+                                    <img src="{{fname.split('/', 1)[1]}}" WIDTH=50>
+                                {% endif %}
+                            {% endfor %}
                         </td>
 
                         <td width="300" height="200" class="table-secondary">

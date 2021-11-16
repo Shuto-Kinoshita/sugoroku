@@ -1,6 +1,9 @@
+# coding=utf-8
 # ライブラリ、モジュールのインポート
 import os
 from flask import Flask, render_template, request, redirect
+import glob
+import shutil
 # データベース
 from models.models import OnegaiContent
 from models.database import db_session
@@ -51,6 +54,9 @@ def mapreset():
         content = OnegaiContent.query.filter_by(id=onegai.id).first()
         db_session.delete(content)
     db_session.commit()
+    # マス画像フォルダの初期化
+    shutil.rmtree('static/images/contentsimg')
+    os.mkdir('static/images/contentsimg')
     return render_template("formselect1.html")
 
 # フォーマット選択ページ
@@ -76,7 +82,8 @@ def index0():
     db_session.commit()
     # 現在入力されているマス目の数をカウント
     count = len(all_onegai)
-    return render_template("contentsinput2.html", all_onegai=all_onegai, count=count, map=map1)
+    flist = glob.glob('app/static/images/contentsimg/*')
+    return render_template("contentsinput2.html", all_onegai=all_onegai, count=count, map=map1, flist=flist)
 
 
 # マス目情報入力ページ
@@ -94,7 +101,8 @@ def index():
     db_session.commit()
     # 現在入力されているマス目の数をカウント
     count = len(all_onegai)
-    return render_template("contentsinput2.html", all_onegai=all_onegai, count=count, map=map)
+    flist = glob.glob('app/static/images/contentsimg/*')
+    return render_template("contentsinput2.html", all_onegai=all_onegai, count=count, map=map, flist=flist)
 
 
 # 完成すごろく出力ページ
