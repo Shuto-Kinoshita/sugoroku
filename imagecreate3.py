@@ -58,13 +58,13 @@ def imagecreate():
     angle = 20
     scale = 0.7
 
-    img = cvpaste(imge, imgback, x, y, angle, scale)
+    #img = cvpaste(imge, imgback, x, y, angle, scale)
 
 
 
 
     # 255:白　128:灰色　0:黒    単色画像または画像挿入
-    #img = np.full((730, 1050, 3), 77, dtype=np.uint8)
+    img = np.full((730, 1050, 3), 77, dtype=np.uint8)
     #img = cv2.imread('app/static/images/party_cracker_kamifubuki.png')
 
     #for i in range(10):
@@ -118,11 +118,11 @@ def imagecreate():
         for j in range(3):
             con = OnegaiContent.query.filter_by(id=k).first()
             if a % 2 == 0:
-                draw.text(xy=(55+j*400, 35+i*140), text=con.title, font=font, fill=(100, 100, 100, 10))
-                draw.text(xy=(55+j*400, 55+i*140), text=con.body, font=font, fill=(100, 100, 100, 10))
+                draw.text(xy=(55+j*400, 35+i*140), text=con.title, font=font, fill=(200, 200, 200, 10))
+                draw.text(xy=(55+j*400, 55+i*140), text=con.body, font=font, fill=(200, 200, 200, 10))
             else:
-                draw.text(xy=(855-j*400, 35+i*140), text=con.title, font=font, fill=(100, 100, 100, 10))
-                draw.text(xy=(855-j*400, 55+i*140), text=con.body, font=font, fill=(100, 100, 100, 10))
+                draw.text(xy=(855-j*400, 35+i*140), text=con.title, font=font, fill=(200, 200, 200, 10))
+                draw.text(xy=(855-j*400, 55+i*140), text=con.body, font=font, fill=(200, 200, 200, 10))
             k = k+1
             if k == b+1:
                 break

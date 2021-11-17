@@ -14,6 +14,7 @@ from werkzeug.utils import secure_filename
 
 # すごろく作成関数
 import imagecr
+import imagecreate5
 import imagecreate3
 import imagecreate4
 
@@ -48,15 +49,15 @@ def start():
 # すごろくデータベースの初期化
 @app.route("/mapreset")
 def mapreset():
-    #database初期化処理
+    # database初期化処理
     all_onegai = OnegaiContent.query.all()
     for onegai in all_onegai:
         content = OnegaiContent.query.filter_by(id=onegai.id).first()
         db_session.delete(content)
     db_session.commit()
     # マス画像フォルダの初期化
-    shutil.rmtree('static/images/contentsimg')
-    os.mkdir('static/images/contentsimg')
+    shutil.rmtree('app/static/images/contentsimg')
+    os.mkdir('app/static/images/contentsimg')
     return render_template("formselect1.html")
 
 # フォーマット選択ページ
@@ -115,13 +116,13 @@ def t4():
     # マス数によってそれぞれのすごろく作成プログラムを実行
     if int(map) == 15:
         print("c")
-        imagecr.imagecreate()
-    elif int(map) == 30:
+        imagecreate5.imagecreate()
+    elif int(map) == 20:
         print("b")
-        #imagecreate3.imagecreate()
+        imagecreate3.imagecreate()
     else:
         print("ab")
-        #imagecreate3.imagecreate()
+        imagecreate4.imagecreate()
     return render_template('mapoutput.html')
 
 
@@ -247,13 +248,13 @@ def uploads_file():
         # ファイルがなかった場合の処理
         if 'file' not in request.files:
             print('ファイルがありません')
-            return redirect(request.url)
+            return index()
         # データの取り出し
         file = request.files['file']
         # ファイル名がなかった時の処理
         if file.filename == '':
             print('ファイルがありません')
-            return redirect(request.url)
+            return index()
         # ファイルのチェック
         if file and allowed_file(file.filename):
             # 危険な文字を削除（サニタイズ処理）
